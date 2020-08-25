@@ -1,0 +1,63 @@
+export const plates = {
+  plates: [
+    {
+      plateId: 0,
+      isHolePlates: true,
+      features: {
+        plateName: '96',
+        company: 'Corning',
+        comment: '',
+        totalHoles: 96,
+        xSize: 127,
+        ySize: 90,
+        xHolesNum: 12,
+        yHolesNum: 8,
+        x0CenterOffset: -49.5,
+        y0CenterOffset: -31.5,
+        xHoleSize: 9,
+        yHoleSize: 9,
+        rHoleSize: 3.5,
+        imageUrl: '',
+        border: {
+          shape: 'polygon',
+          points: [
+            [-40, -60],
+            [-40, 60],
+            [37, 60],
+            [40, 57],
+            [40, -60],
+          ],
+        },
+      },
+    },
+    {
+      plateId: 1,
+      isHolePlates: true,
+      features: {
+        plateName: '96',
+        company: 'Corning',
+        comment: '',
+        totalHoles: 96,
+        xSize: 127,
+        ySize: 90,
+        xHolesNum: 12,
+        yHolesNum: 8,
+        x0CenterOffset: -50,
+        y0CenterOffset: -50,
+        xHoleSize: 14,
+        yHoleSize: 20,
+        rHoleSize: 3,
+        imageUrl: '',
+        border: {
+          shape: 'polygon',
+          points: [
+            [-1, -1],
+            [-1, 1],
+            [1, 1],
+            [1, -1],
+          ],
+        },
+      },
+    },
+  ],
+};
