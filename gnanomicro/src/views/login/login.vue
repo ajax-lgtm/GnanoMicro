@@ -21,8 +21,9 @@
                 class="elevation-12"
               >
                 <v-form
-                  :model="loginForm"
+                  v-model="valid"
                   style="height:360px;padding:50px 100px 0px 100px"
+                  ref="loginFormRef"
                 >
                   <v-img
                     class="xiangji"
@@ -52,6 +53,19 @@
                   ></v-checkbox>
                   <a class="fPwd" href="#">忘记密码?</a>
                   <v-btn block dark @click="login" color="#5cbbf6">登录</v-btn>
+                  <v-snackbar
+                    v-model="snackbar"
+                    :bottom="y === 'bottom'"
+                    :color="color"
+                    :left="x === 'left'"
+                    :multi-line="mode === 'multi-line'"
+                    :right="x === 'right'"
+                    :timeout="timeout"
+                    :top="y === 'top'"
+                    :vertical="mode === 'vertical'"
+                  >
+                    {{ text }}
+                  </v-snackbar>
                   <p
                     style="font-size:14px;transform:translate(36%);margin-top:50px"
                   >
@@ -73,20 +87,32 @@
 export default {
     data(){
         return{
+            color: '',
+            mode: '',
+            snackbar: false,
+            text: '密码或账号输入有误',
+            timeout: 1000,
+            x: null,
+            y: 'top',
+            valid:true,
             loginForm:{userName: "",password: ""},
             nameRules: [v => !!v || "请输入账号"],
             pwdRules: [v => !!v || "请输入密码"]
         }
     },
     methods:{
-        login(){
-            // this.$refs.loginFormRef.validate(async valid=>{
-                // if (!valid) return;
-                // const {data:res} =this.$http.post('user',this.loginForm);
-                this.$router.replace('')
-            // })
+        async login(){
+              // this.$refs.loginFormRef.validate(async valid=>{
+                // if(!valid) return;
+                const user={"action":"login","user":this.loginForm};
+                const data=await this.$http.post('user',user);
+                if(data.data.error_code!=200){
+                  this.snackbar=true;
+                }
+                this.$router.replace('/home');
+              // })
         }
-    }
+  }
 }
 </script>
 <style scoped>
@@ -99,7 +125,7 @@ export default {
 }
 .border {
   border: 1px solid rgba(112, 171, 237, 0.3);
-  box-shadow: 1px 1px 1px rgba(112, 171, 237, 0.3);
+  box-shadow: 1px 1px 1px #70abed4d;
   border-radius: 10px;
 }
 .img {
@@ -111,7 +137,7 @@ export default {
 .xiangji {
   position: absolute;
   left: 50%;
-  transform: translate(-50%, -100%);
+  transform: translate(-50%, -100%);  
   width: 110px;
   height: 100px;
   background-color: #fff;
