@@ -85,33 +85,35 @@
 </template>
 <script>
 export default {
-    data(){
-        return{
-            color: '',
-            mode: '',
-            snackbar: false,
-            text: '密码或账号输入有误',
-            timeout: 1000,
-            x: null,
-            y: 'top',
-            valid:true,
-            loginForm:{userName: "",password: ""},
-            nameRules: [v => !!v || "请输入账号"],
-            pwdRules: [v => !!v || "请输入密码"]
-        }
-    },
-    methods:{
-        async login(){
-              // this.$refs.loginFormRef.validate(async valid=>{
-                // if(!valid) return;
-                const user={"action":"login","user":this.loginForm};
-                const data=await this.$http.post('user',user);
-                if(data.data.error_code!=200){
-                  this.snackbar=true;
-                }
-                this.$router.replace('/home');
-              // })
-        }
+  data() {
+    return {
+      color: '',
+      mode: '',
+      snackbar: false,
+      text: '密码或账号输入有误',
+      timeout: 1000,
+      x: null,
+      y: 'top',
+      valid: true,
+      loginForm: { userName: '', password: '' },
+      nameRules: [v => !!v || '请输入账号'],
+      pwdRules: [v => !!v || '请输入密码']
+    }
+  },
+  methods: {
+    async login() {
+      // this.$refs.loginFormRef.validate(async valid=>{
+      // if(!valid) return;
+      const user = { action: 'login', user: this.loginForm }
+      const res = await this.$http.post('user', user)
+      console.log(res)
+      if (res.data.error_code != 200) {
+        this.snackbar = true
+      }
+      window.sessionStorage.setItem('token', res.data.token)
+      this.$router.push('/home')
+      // })
+    }
   }
 }
 </script>
@@ -137,7 +139,7 @@ export default {
 .xiangji {
   position: absolute;
   left: 50%;
-  transform: translate(-50%, -100%);  
+  transform: translate(-50%, -100%);
   width: 110px;
   height: 100px;
   background-color: #fff;
