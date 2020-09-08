@@ -1,6 +1,6 @@
 <template>
-  <div class="login_form border">
-    <div class="border">
+  <div class="login_form">
+    <div>
       <v-app>
         <v-container style="padding:0">
           <v-col style="display:inline-block;padding-right:30px;" cols="7">
@@ -12,10 +12,10 @@
           </v-col>
           <v-col
             style="text-algin:center;display:inline-block;position:absolute;top:23%"
-            class="loginForm border"
+            class="loginForm"
             cols="5"
           >
-            <div class="box border">
+            <div class="box">
               <v-card
                 style="width:500px;position: absolute;left: 50%;transform: translate(-50%);"
                 class="elevation-12"
@@ -102,17 +102,20 @@ export default {
   },
   methods: {
     async login() {
-      // this.$refs.loginFormRef.validate(async valid=>{
-      // if(!valid) return;
-      const user = { action: 'login', user: this.loginForm }
-      const res = await this.$http.post('user', user)
-      console.log(res)
-      if (res.data.error_code != 200) {
-        this.snackbar = true
-      }
-      window.sessionStorage.setItem('token', res.data.token)
-      this.$router.push('/home')
-      // })
+        this.valid=this.$refs.loginFormRef.validate;
+        if(this.valid){
+          const user = { action: 'login', user: this.loginForm }
+          const res = await this.$http.post('user', user)
+          console.log(res);
+          if (res.data.error_code != 200) {
+            this.snackbar = true
+          }else{
+            window.sessionStorage.setItem('token', res.data.token)
+            this.$router.push('/home')
+          }
+        }else{
+          this.$refs.form.validate();
+        }
     }
   }
 }
@@ -124,11 +127,6 @@ export default {
   /* position: absolute;
         left: 50%;
         transform: translate(-50%); */
-}
-.border {
-  border: 1px solid rgba(112, 171, 237, 0.3);
-  box-shadow: 1px 1px 1px #70abed4d;
-  border-radius: 10px;
 }
 .img {
   position: absolute;
@@ -147,9 +145,7 @@ export default {
 .loginForm {
   height: auto;
   line-height: 5px;
-  border: 1px solid rgba(112, 171, 237, 0.3);
   box-shadow: 1px 1px 1px rgba(112, 171, 237, 0.3);
-  border-radius: 10px;
   /* border-collapse:separate; */
 }
 .loginForm .box {

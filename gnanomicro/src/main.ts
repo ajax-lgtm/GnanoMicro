@@ -8,7 +8,7 @@ import vuetify from "./plugins/vuetify";
 import axios from 'axios';
 
 Vue.prototype.$http=axios;
-axios.defaults.baseURL='http://192.168.8.104:5000/v1/';
+axios.defaults.baseURL='http://192.168.8.103:5000/v1/';
 Vue.config.productionTip = false;
 Vue.use(Vuetify);
 new Vue({
